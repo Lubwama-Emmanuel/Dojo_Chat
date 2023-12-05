@@ -3,6 +3,7 @@ import { StyleSheet, TextInput, View } from "react-native";
 interface InputProps {
   inputConfig: {
     placeholder: string;
+    onChangeText: (enteredValue: string) => void;
   };
 }
 
