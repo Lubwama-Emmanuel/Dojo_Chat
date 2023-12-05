@@ -1,15 +1,23 @@
-import React from "react";
+import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+
 import Chat from "./screens/Chat";
 import LogIn from "./screens/Login";
 import SignUp from "./screens/SignUp";
 
 const Stack = createStackNavigator();
 
-function ChatStack() {
+function AuthStack() {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="LogIn"
+        component={LogIn}
+      />
       <Stack.Screen
         options={{
           headerShown: false,
@@ -17,21 +25,31 @@ function ChatStack() {
         name="SignUp"
         component={SignUp}
       />
+    </Stack.Navigator>
+  );
+}
+
+function ChatStack() {
+  return (
+    <Stack.Navigator>
       <Stack.Screen
         options={{
-          headerShown: false,
+          headerBackTitleVisible: false,
+          headerLeft: () => null,
         }}
-        name="Login"
-        component={LogIn}
+        name="Chat"
+        component={Chat}
       />
     </Stack.Navigator>
   );
 }
 
 function RootNavigator() {
+  // useSelector((state) => console.log(state));
+  const token = "token";
   return (
     <NavigationContainer>
-      <ChatStack />
+      {token ? <ChatStack /> : <AuthStack />}
     </NavigationContainer>
   );
 }
