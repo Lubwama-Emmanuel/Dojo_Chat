@@ -46,7 +46,7 @@ function ChatStack() {
 
 function RootNavigator() {
   // useSelector((state) => console.log(state));
-  const token = "token";
+  const token = "";
   return (
     <NavigationContainer>
       {token ? <ChatStack /> : <AuthStack />}
