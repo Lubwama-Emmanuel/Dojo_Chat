@@ -6,6 +6,7 @@ import { createNewUser } from "../utils/api";
 
 import Button from "../ui/Button";
 import Input from "../ui/Input";
+import { register } from "../utils/Auth";
 
 export type RootStackParamList = {
   LogIn: undefined;
@@ -26,7 +27,8 @@ export default function SignUp(this: any) {
 
   async function createUser() {
     try {
-      await createNewUser(inputValues.email, inputValues.password);
+      // await createNewUser(inputValues.email, inputValues.password);
+      register(inputValues.email, inputValues.password);
     } catch (error) {
       console.log("an error occured here");
       return;

@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { logInUser } from "../utils/api";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
+import { signIn } from "../utils/Auth";
 
 export type RootStackParamList = {
   SignUp: undefined;
@@ -22,7 +23,7 @@ export default function LogIn(this: any) {
 
   async function authenicateUser() {
     try {
-      const res = await logInUser(inputValues.email, inputValues.password);
+      signIn(inputValues.email, inputValues.password);
     } catch (error) {
       console.log("an error occured here", error);
       return;
