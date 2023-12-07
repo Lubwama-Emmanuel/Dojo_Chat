@@ -4,14 +4,14 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 
-export const register = (email: string, password: string) => {
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      console.log("Here is what we have", userCredential);
-    })
-    .catch((error) => {
-      console.log("an error here", error.message);
-    });
+export const register = async (email: string, password: string) => {
+  const userCredentials = await createUserWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
+  const token = await userCredentials.user.getIdToken();
+  return token;
 };
 
 export const signIn = async (email: string, password: string) => {
@@ -20,5 +20,6 @@ export const signIn = async (email: string, password: string) => {
     email,
     password
   );
-  return userCredentials.providerId;
+  const token = await userCredentials.user.getIdToken();
+  return token;
 };
