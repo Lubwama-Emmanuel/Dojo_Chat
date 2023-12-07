@@ -6,11 +6,11 @@ import Constants from "expo-constants";
 
 const firebaseConfig = {
   apiKey: Constants.expoConfig.extra.apiKey,
-  //   authDomain: "dojochat-37057.appspot.com",
-  projectId: "dojochat-37057",
-  storageBucket: "dojochat-37057.appspot.com",
-  //   messagingSenderId: "your_messaging_sender_id",
-  appId: "1:922429953234:ios:5de34ccec82709f5a6890b",
+  authDomain: Constants.expoConfig.extra.authDomain,
+  projectId: Constants.expoConfig.extra.projectId,
+  storageBucket: Constants.expoConfig.extra.storageBucket,
+  messagingSenderId: Constants.expoConfig.extra.messagingSenderId,
+  appId: Constants.expoConfig.extra.appId,
   //   measurementId: "your_measurement_id", // optional
 };
 
