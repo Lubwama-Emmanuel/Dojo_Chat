@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Chat from "./screens/Chat";
 import LogIn from "./screens/Login";
 import SignUp from "./screens/SignUp";
+import { AuthContext } from "./Context";
 
 const Stack = createStackNavigator();
 
@@ -46,11 +47,18 @@ function ChatStack() {
 
 function RootNavigator() {
   // useSelector((state) => console.log(state));
-  const token = "";
+  const [token, setToken] = React.useState("");
   return (
-    <NavigationContainer>
-      {token ? <ChatStack /> : <AuthStack />}
-    </NavigationContainer>
+    <AuthContext.Provider
+      value={{
+        token,
+        setToken,
+      }}
+    >
+      <NavigationContainer>
+        {token ? <ChatStack /> : <AuthStack />}
+      </NavigationContainer>
+    </AuthContext.Provider>
   );
 }
 

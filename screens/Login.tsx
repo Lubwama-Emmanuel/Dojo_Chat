@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { View, StyleSheet, Text, Image, Pressable } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
@@ -7,6 +7,7 @@ import { logInUser } from "../utils/api";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
 import { signIn } from "../utils/Auth";
+import { AuthContext } from "../Context";
 
 export type RootStackParamList = {
   SignUp: undefined;
@@ -20,10 +21,16 @@ const initialValues = {
 export default function LogIn(this: any) {
   const [inputValues, setInputValues] = useState(initialValues);
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const got = useContext(AuthContext);
+
+  // console.log("context", got);
 
   async function authenicateUser() {
     try {
-      signIn(inputValues.email, inputValues.password);
+      const response = await signIn(inputValues.email, inputValues.password);
+
+      console.log("Got response", response);
+      console.log(response);
     } catch (error) {
       console.log("an error occured here", error);
       return;

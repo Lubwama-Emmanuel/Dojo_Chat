@@ -14,12 +14,11 @@ export const register = (email: string, password: string) => {
     });
 };
 
-export const signIn = (email: string, password: string) => {
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      console.log("Here is what we have", userCredential);
-    })
-    .catch((error) => {
-      console.log("an error here", error.message);
-    });
+export const signIn = async (email: string, password: string) => {
+  const userCredentials = await signInWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
+  return userCredentials.providerId;
 };
