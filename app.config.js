@@ -28,6 +28,11 @@ export default {
     },
     extra: {
       apiKey: process.env.API_KEY,
+      projectId: process.env.PROJECT_ID,
+      storageBucket: process.env.STORAGE_BUCKET,
+      appId: process.env.APP_ID,
+      messagingSenderId: process.env.MESSAGING_SENDER_ID,
+      authDomain: process.env.AUTH_DOMAIN,
     },
   },
 };
