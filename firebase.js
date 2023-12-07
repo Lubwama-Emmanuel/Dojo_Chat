@@ -1,6 +1,7 @@
 import { initializeApp, getApp } from "firebase/app";
 import { initializeFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { initializeAuth, getReactNativePersistence } from "firebase/auth";
 import Constants from "expo-constants";
 
 const firebaseConfig = {
@@ -15,7 +16,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
+const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(AsyncStorage),
+});
 const db = initializeFirestore(app, { experimentalForceLongPolling: true });
 
 export { db, auth };
