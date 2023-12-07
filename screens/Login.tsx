@@ -2,8 +2,8 @@ import { useContext, useState } from "react";
 import { View, StyleSheet, Text, Image, Pressable } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { logInUser } from "../utils/api";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
 import { signIn } from "../utils/Auth";
@@ -21,16 +21,14 @@ const initialValues = {
 export default function LogIn(this: any) {
   const [inputValues, setInputValues] = useState(initialValues);
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const got = useContext(AuthContext);
-
-  // console.log("context", got);
+  const { setToken } = useContext(AuthContext);
 
   async function authenicateUser() {
     try {
-      const response = await signIn(inputValues.email, inputValues.password);
+      const token = await signIn(inputValues.email, inputValues.password);
 
-      console.log("Got response", response);
-      console.log(response);
+      setToken(token);
+      await AsyncStorage.setItem("token", token);
     } catch (error) {
       console.log("an error occured here", error);
       return;
