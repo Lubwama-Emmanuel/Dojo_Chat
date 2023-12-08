@@ -7,6 +7,7 @@ import Chat from "./screens/Chat";
 import LogIn from "./screens/Login";
 import SignUp from "./screens/SignUp";
 import { AuthContext } from "./Context";
+import Profile from "./screens/Profile";
 
 const Stack = createStackNavigator();
 
@@ -42,6 +43,7 @@ function ChatStack() {
         name="Chat"
         component={Chat}
       />
+      <Stack.Screen options={{}} name="Profile" component={Profile} />
     </Stack.Navigator>
   );
 }
