@@ -14,6 +14,7 @@ export type RootStackParamList = {
 };
 
 const initialValues = {
+  name: "",
   email: "",
   password: "",
 };
@@ -29,7 +30,11 @@ export default function SignUp(this: any) {
 
   async function createUser() {
     try {
-      const token = register(inputValues.email, inputValues.password);
+      const token = register(
+        inputValues.name,
+        inputValues.email,
+        inputValues.password
+      );
       setToken(token);
     } catch (error) {
       console.log("an error occured here");
@@ -50,6 +55,12 @@ export default function SignUp(this: any) {
       <Image source={require("../assets/bg.png")} style={styles.image} />
       <View style={styles.innerContainer}>
         <Text style={styles.heading}>Sign Up</Text>
+        <Input
+          inputConfig={{
+            placeholder: "Enter Name",
+            onChangeText: handleInputValues.bind(this, "name"),
+          }}
+        />
         <Input
           inputConfig={{
             placeholder: "Enter Email",
