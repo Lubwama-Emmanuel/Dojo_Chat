@@ -1,5 +1,8 @@
-import { useCallback, useLayoutEffect, useState } from "react";
+import { useCallback, useContext, useLayoutEffect, useState } from "react";
 import { GiftedChat, IMessage } from "react-native-gifted-chat";
+import { StackNavigationProp } from "@react-navigation/stack";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import {
   collection,
   addDoc,
@@ -9,13 +12,57 @@ import {
 } from "firebase/firestore";
 
 import { auth, db } from "../firebase";
+import { useNavigation } from "@react-navigation/native";
+import { TouchableOpacity, Image } from "react-native";
+import { AuthContext } from "../Context";
+
+export type RootStackParamList = {
+  Profile: undefined;
+};
 
 export default function Chat() {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [messages, setMessages] = useState<IMessage[]>([]);
+  const { setToken } = useContext(AuthContext);
+
   const userId = auth?.currentUser?.email ?? "test1@gmail.com";
   const name = auth?.currentUser?.displayName ?? "test";
+  const avatorUrl =
+    auth?.currentUser?.photoURL ??
+    "https://ui-avatars.com/api/?name=Emmanuel+Lubwama";
+
+  console.log(avatorUrl);
+
+  function signOutUser() {
+    AsyncStorage.removeItem("token");
+    setToken("");
+  }
+
+  function openProfile() {
+    navigation.navigate("Profile");
+  }
 
   useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          style={{
+            margin: 10,
+          }}
+          onPress={openProfile}
+        >
+          {/* <AntDesign name="logout" size={20} /> */}
+          <Image
+            source={{ uri: avatorUrl }}
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 10000,
+            }}
+          />
+        </TouchableOpacity>
+      ),
+    });
     const q = query(collection(db, "chats"), orderBy("createdAt", "desc"));
     const unsubscribe = onSnapshot(q, (snapshot) =>
       setMessages(
@@ -50,8 +97,11 @@ export default function Chat() {
       user={{
         _id: userId,
         name: name,
-        avatar: "https://placeimg.com/140/140/any",
+        avatar: avatorUrl,
       }}
+      showAvatarForEveryMessage={true}
+      showUserAvatar={true}
+      renderAvatarOnTop={true}
     />
   );
 }
