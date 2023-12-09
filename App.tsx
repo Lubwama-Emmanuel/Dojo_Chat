@@ -65,6 +65,7 @@ function RootNavigator() {
     fetchToken();
   }, []);
 
+  // iSLOADING STATE
   if (isLoading) {
     return null;
   }
